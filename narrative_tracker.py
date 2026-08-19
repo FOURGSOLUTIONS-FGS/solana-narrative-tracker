@@ -1,6 +1,12 @@
 import os
 import requests
 import json
+from datetime import datetime, timezone
+
+# DEX donde un pool ya tiene liquidez y precio real (graduó de la curva de
+# bonding de pump.fun) — un pool en "pump-fun" todavía no tiene eso, así
+# que se excluye tanto del descubrimiento por-DEX como de `new_pools`.
+DEXES_GRADUADOS = {"pumpswap", "raydium", "meteora", "meteora_damm_v2", "orca"}
 
 # =====================================================================
 # SOLANA NARRATIVE TRACKER - VERSÓN 100% GRATUITA (SIN API KEY)
@@ -12,37 +18,73 @@ import json
 
 def obtener_tokens_tendencia_solana():
     """
-    Obtiene pools reales de memecoins de Solana vía GeckoTerminal.
+    Obtiene pools reales de memecoins de Solana vía GeckoTerminal, de dos
+    fuentes combinadas:
+
+    1. Pools por-DEX (`/dexes/{dex}/pools`) — establecidos, ordenados por
+       relevancia de GeckoTerminal. Buena base amplia.
+    2. Pools NUEVOS (`/new_pools`) — los recién graduados de la curva de
+       bonding, para capturar memes que están "agarrando camino" ahora
+       mismo. Es la fuente que hace posible la sección de scalping (ver
+       `procesar_y_categorizar`): de cada diez lanzamientos, dos o tres se
+       sostienen con volumen real — y esos son los que un scalp de minutos
+       puede aprovechar mientras siguen siendo volátiles.
+
+    `new_pools` es un firehose que mezcla TODOS los DEX, incluyendo
+    "pump-fun" (la curva de bonding en sí, sin liquidez real todavía) — se
+    filtra a `DEXES_GRADUADOS` para quedarse solo con pools que ya tienen
+    precio y liquidez de mercado real.
 
     ARREGLO (2026-08-19): la versión original buscaba la palabra literal
     "solana" en DexScreener (`/latest/dex/search?q=solana`) — eso devuelve
     sobre todo pares grandes como SOL/USDC (porque literalmente contienen
     la palabra "solana" en el nombre), no memecoins nuevas o en tendencia.
     Verificado en vivo: ese endpoint da 20 pares, casi ninguno pasa los
-    filtros, y el reporte final sale vacío.
+    filtros, y el reporte final salía vacío.
 
-    GeckoTerminal es igual de gratuito y sin API key, pero consultando los
-    DEX donde de verdad viven las memecoins ya graduadas (pumpswap, raydium,
-    meteora, orca) en vez de buscar una palabra. Cada pool se traduce al
-    mismo formato que usaba DexScreener (`chainId`/`baseToken`/`marketCap`/
-    `liquidity`/`volume`) para que `procesar_y_categorizar` y
-    `generar_bloque_copiado` sigan funcionando exactamente igual, sin tocar
-    nada de la lógica de filtrado ni de narrativas.
+    Cada pool se traduce al mismo formato que usaba DexScreener
+    (`chainId`/`baseToken`/`marketCap`/`liquidity`/`volume`) para que
+    `procesar_y_categorizar` y `generar_bloque_copiado` sigan funcionando
+    sin tocar nada de la lógica de filtrado ni de narrativas.
     """
     print("[+] Conectando con la blockchain de Solana a través de GeckoTerminal...")
-    dexes = ["pumpswap", "raydium", "meteora", "orca"]
     pairs = []
-    for dex in dexes:
+    vistos = set()
+
+    def agregar(pool):
+        formato = _pool_geckoterminal_a_formato_dexscreener(pool)
+        mint = formato.get("baseToken", {}).get("address")
+        if mint and mint not in vistos:
+            vistos.add(mint)
+            pairs.append(formato)
+
+    # Fuente 1 — establecidos, por DEX.
+    for dex in sorted(DEXES_GRADUADOS - {"meteora_damm_v2"}):
         url = f"https://api.geckoterminal.com/api/v2/networks/solana/dexes/{dex}/pools"
         try:
             response = requests.get(url, params={"page": 1}, timeout=10, headers={"Accept": "application/json"})
             if response.status_code == 200:
                 for pool in response.json().get("data", []):
-                    pairs.append(_pool_geckoterminal_a_formato_dexscreener(pool))
+                    agregar(pool)
             else:
                 print(f"[-] {dex}: HTTP {response.status_code}")
         except Exception as e:
             print(f"[-] Error de conexión con {dex}: {e}")
+
+    # Fuente 2 — recién creados (cualquier DEX graduado), para el radar de scalping.
+    url_nuevos = "https://api.geckoterminal.com/api/v2/networks/solana/new_pools"
+    try:
+        response = requests.get(url_nuevos, params={"page": 1}, timeout=10, headers={"Accept": "application/json"})
+        if response.status_code == 200:
+            for pool in response.json().get("data", []):
+                dex_id = ((pool.get("relationships", {}).get("dex", {}).get("data", {}) or {}).get("id"))
+                if dex_id in DEXES_GRADUADOS:
+                    agregar(pool)
+        else:
+            print(f"[-] new_pools: HTTP {response.status_code}")
+    except Exception as e:
+        print(f"[-] Error de conexión con new_pools: {e}")
+
     return pairs
 
 
@@ -63,6 +105,7 @@ def _pool_geckoterminal_a_formato_dexscreener(pool):
 
     return {
         "chainId": "solana",
+        "poolCreatedAt": attrs.get("pool_created_at"),
         "baseToken": {"address": mint, "symbol": nombre, "name": nombre},
         # Photon abre por dirección del PAR (`/en/lp/{pairAddress}`), no del
         # token — verificado en vivo navegando a
@@ -88,13 +131,52 @@ MINTS_QUE_NO_SON_MEMECOINS = {
     "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",  # USDT
 }
 
+# Ventana de "recién creado con tracción" para la sección prioritaria de
+# scalping — de cada diez lanzamientos, dos o tres se sostienen con volumen
+# real; esos son los que valen la pena cazar mientras siguen siendo
+# volátiles. Pasadas las 48h ya no es "recién agarrando camino", es
+# simplemente un token más — sigue apareciendo en su narrativa normal, solo
+# sale de esta sección prioritaria.
+UMBRAL_HORAS_NUEVO = 48
+
+
+def formatear_edad(pool_created_at_iso):
+    """Convierte el timestamp ISO de creación del pool en (texto legible,
+    horas transcurridas) — ej. ("2d 5h", 53.2) o ("47m", 0.78)."""
+    if not pool_created_at_iso:
+        return "N/D", None
+    try:
+        creado = datetime.fromisoformat(pool_created_at_iso.replace("Z", "+00:00"))
+    except ValueError:
+        return "N/D", None
+    horas_totales = (datetime.now(timezone.utc) - creado).total_seconds() / 3600
+    if horas_totales < 0:
+        return "N/D", None
+    dias = int(horas_totales // 24)
+    horas = int(horas_totales % 24)
+    minutos = int((horas_totales * 60) % 60)
+    if dias > 0:
+        return f"{dias}d {horas}h", horas_totales
+    if horas > 0:
+        return f"{horas}h {minutos}m", horas_totales
+    return f"{minutos}m", horas_totales
+
 
 def procesar_y_categorizar(pairs):
     """
     Filtra los tokens según las métricas de tu presupuesto ($3 USD)
     y los agrupa en narrativas para facilitar el análisis.
+
+    "Nuevos_Momentum" va primero a propósito: son los candidatos con más
+    sentido para scalping AHORA MISMO — recién creados (< 48h) y ya con
+    volumen real en los últimos 5 minutos, es decir, ya cumplen los
+    requisitos mínimos para operar en el momento de la búsqueda, no una
+    narrativa vieja y establecida. Un token puede aparecer aquí Y en su
+    categoría de narrativa — son dos preguntas distintas (¿es nuevo y
+    tiene tracción ahora? / ¿de qué narrativa es?).
     """
     categorizados = {
+        "Nuevos_Momentum": [],    # PRIORIDAD: recién creados y ya con volumen — candidatos a scalping
         "AI_Agents": [],          # Narrativa de Inteligencia Artificial
         "PolitiFi": [],           # Narrativa Política
         "Cute_Animals_Giga": [],  # Mascotas y Cultos de X
@@ -136,10 +218,12 @@ def procesar_y_categorizar(pairs):
             continue
 
         pair_address = p.get('pairAddress', '')
+        edad_texto, edad_horas = formatear_edad(p.get('poolCreatedAt'))
         token_info = {
             "symbol": symbol,
             "address": address,
             "pair_address": pair_address,
+            "edad": edad_texto,
             # Link directo que abre el token en Photon sin tener que buscarlo
             # a mano — Photon usa la dirección del PAR, no la del token (ver
             # `_pool_geckoterminal_a_formato_dexscreener`), verificado
@@ -154,8 +238,15 @@ def procesar_y_categorizar(pairs):
             "liquidity": f"${liquidity:,.0f}",
             "vol_5m": f"${vol_5m:,.0f}",
             "vol_1h": f"${vol_1h:,.0f}",
-            "vol_24h": f"${vol_24h:,.0f}"
+            "vol_24h": f"${vol_24h:,.0f}",
+            "_vol_5m_num": vol_5m,  # para ordenar Nuevos_Momentum por actividad reciente, no se muestra
         }
+
+        # Prioridad — recién creado (< 48h) y ya con volumen real en los
+        # últimos 5 min: ya cumple los requisitos mínimos para operar un
+        # scalp ahora mismo, sin importar de qué narrativa sea.
+        if edad_horas is not None and edad_horas <= UMBRAL_HORAS_NUEVO and vol_5m > 0:
+            categorizados["Nuevos_Momentum"].append(token_info)
 
         # Clasificación por palabras clave de la narrativa
         name_and_symbol = (name + " " + symbol.lower())
@@ -170,6 +261,10 @@ def procesar_y_categorizar(pairs):
             if vol_5m > 5000:
                 categorizados["Otros_Graduados"].append(token_info)
 
+    # Los más activos ahora mismo primero — no el orden en que llegaron de
+    # la API, que no dice nada sobre si de verdad valen la pena.
+    categorizados["Nuevos_Momentum"].sort(key=lambda t: t["_vol_5m_num"], reverse=True)
+
     return categorizados
 
 def generar_bloque_copiado(categorizados):
@@ -180,24 +275,29 @@ def generar_bloque_copiado(categorizados):
     markdown = []
     markdown.append("# 🚨 SOLANA LIVE ON-CHAIN DATA (PARA ANÁLISIS DE TRINCHERA)\n")
     markdown.append("Actúa como mi analista de riesgo de memecoins. A continuación te pego los datos en tiempo real de los tokens que cumplen con mis filtros de bajo capital ($3 USD de saldo, compras de 0.01 SOL).")
+    markdown.append("La sección **Nuevos Momentum** es la prioridad: son recién creados (< 48h) y ya con volumen real ahora mismo — los candidatos con más sentido para un scalp de minutos, antes de que se enfríen.")
     markdown.append("Por favor, analiza la rotación del dinero y dime cuál narrativa tiene mayor fuerza en este momento y en qué token específico del listado debería enfocar mi Photon para hacer un scalping rápido (+15% a +20%).\n")
+
+    titulos = {"Nuevos_Momentum": "🔥 NUEVOS MOMENTUM (candidatos a scalping AHORA)"}
 
     for categoria, tokens in categorizados.items():
         if not tokens:
             continue
-        markdown.append(f"## 📌 NARRATIVA: {categoria.replace('_', ' ')}")
+        titulo = titulos.get(categoria, f"NARRATIVA: {categoria.replace('_', ' ')}")
+        markdown.append(f"## 📌 {titulo}")
         for idx, t in enumerate(tokens[:5]):  # Mostrar los top 5 de cada categoría para no saturar
             markdown.append(f"{idx+1}. **${t['symbol']}**")
             markdown.append(f"   * Contrato: `{t['address']}`")
             if t.get("photon_url"):
                 # Click directo — abre el token en Photon sin buscarlo a mano.
                 markdown.append(f"   * 🔫 [Abrir en Photon]({t['photon_url']})")
+            markdown.append(f"   * Edad: {t.get('edad', 'N/D')}")
             markdown.append(f"   * Market Cap: {t['mcap']} | Liquidez: {t['liquidity']}")
             markdown.append(f"   * Vol 5m: {t['vol_5m']} | Vol 1h: {t['vol_1h']}")
             markdown.append("")
 
     markdown.append("---")
-    markdown.append("Analiza detalladamente estos datos bajo las reglas de Domin y Wood (baja tenencia, evitar bundling, priorizar volumen en 5m sobre Mcap). ¡Dame mi plan de batalla rápido!")
+    markdown.append("Analiza detalladamente estos datos bajo las reglas de Domin y Wood (baja tenencia, evitar bundling, priorizar volumen en 5m sobre Mcap). Dale más peso a la sección Nuevos Momentum y a la edad de cada token — más nuevo y con volumen ya activo es justo lo que hace falta para un scalp de minutos. ¡Dame mi plan de batalla rápido!")
 
     return "\n".join(markdown)
 

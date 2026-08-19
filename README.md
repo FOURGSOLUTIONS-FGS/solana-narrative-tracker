@@ -1,12 +1,31 @@
 # Solana Narrative Tracker
 
-Escanea DexScreener en tiempo real, filtra memecoins de Solana bajo reglas de
-bajo capital, y genera un bloque de texto listo para pegar en Claude
-(gratuito o no) para pedir análisis de narrativa/rotación de dinero.
+Escanea GeckoTerminal en tiempo real (pools establecidos + recién creados),
+filtra memecoins de Solana bajo reglas de bajo capital, y genera un bloque
+de texto listo para pegar en Claude (gratuito o no) para pedir análisis de
+narrativa/rotación de dinero — con link directo a Photon por cada token.
 
-**No ejecuta ninguna operación.** Solo lee datos públicos de DexScreener y
-genera un reporte de texto. La decisión y la ejecución en Photon (u otra
-plataforma) siguen siendo manuales, tuyas.
+**No ejecuta ninguna operación.** Solo lee datos públicos y genera un
+reporte de texto. La decisión y la ejecución en Photon siguen siendo
+manuales, tuyas.
+
+## Sección prioritaria: 🔥 Nuevos Momentum
+
+Además de las narrativas de siempre, el reporte trae una sección aparte,
+primero: tokens creados hace **menos de 48 horas** que ya tienen volumen
+real en los últimos 5 minutos — candidatos a scalping en el momento mismo
+de la corrida, ordenados por actividad reciente (el más movido primero).
+Cada uno muestra su **edad exacta** (días/horas/minutos desde que se creó
+el pool).
+
+⚠️ Esto es intencionalmente más agresivo que la "regla de 48h" de esperar
+antes de comprar — es al revés, prioriza justo lo que todavía no cumplió
+esas 48h. Es una decisión explícita para cazar el tramo donde vive el
+scalping, no un descuido. El riesgo es mayor precisamente por eso: este
+script no verifica seguridad del contrato (mint/freeze authority, liquidez
+bloqueada, concentración de holders) — solo edad, liquidez y volumen. La
+verificación de seguridad sigue siendo manual (Photon/Rugcheck) antes de
+entrar a cualquiera de estos.
 
 ## Cómo leer el reporte — un solo link fijo
 
