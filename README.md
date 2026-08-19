@@ -57,11 +57,9 @@ original, sin cambios de lógica, solo desplegado para correr solo.
 
 ## Costo
 
-Repo **privado** — los minutos de GitHub Actions sí consumen la cuota del
-plan de la organización (a diferencia de un repo público, que es gratis sin
-límite). Con el horario actual (~28 corridas/día, unos 15-20 segundos cada
-una) el uso estimado es de ~800-900 minutos/mes, dentro de la cuota gratuita
-típica de 2.000 min/mes — pero si la organización ya usa Actions para otras
-cosas, vale la pena revisar **Settings → Billing → Actions** de vez en
-cuando. No hay API keys ni secretos propios — DexScreener/GeckoTerminal son
-públicos y no requieren autenticación.
+$0. El repo es **público**, así que los minutos de GitHub Actions no tienen
+costo ni límite mensual, sin importar cuántas veces corra al día. No hay API
+keys ni secretos propios — DexScreener/GeckoTerminal son públicos y no
+requieren autenticación. (El único contenido del repo es el script de
+filtrado y los reportes generados — nada sensible que proteger con
+privacidad.)
