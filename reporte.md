@@ -20,21 +20,21 @@ Por favor, analiza la rotación del dinero y dime cuál narrativa tiene mayor fu
 1. **$CATE**
    * Contrato: `Ai66LHZG9MCzg1WKdawwqduVAXpNDUuV8M3uyq5ppump`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/AUaPMKd13d633cXRRrPRfTeL5XRN64ngDWLEfH5zfBML)
-   * Market Cap: $11,354,224 | Liquidez: $234,830
-   * Vol 5m: $4,117 | Vol 1h: $66,099
+   * Market Cap: $11,379,915 | Liquidez: $234,467
+   * Vol 5m: $4,611 | Vol 1h: $66,592
 
 ## 📌 NARRATIVA: Otros Graduados
 1. **$HOOD**
    * Contrato: `8fipYA8kSkzHgcXUdKVgdh3CvoMhXR6kAo74693M3fPV`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/2sLVno3U42bPYSsRwGWKUyt1JqzqReVRaUQaZ9ZjsdBh)
-   * Market Cap: $20,182,807 | Liquidez: $472,207
-   * Vol 5m: $453,640 | Vol 1h: $14,424,293
+   * Market Cap: $20,258,985 | Liquidez: $474,861
+   * Vol 5m: $642,447 | Vol 1h: $14,613,100
 
 2. **$NVDA**
    * Contrato: `4g5bBMvugH4bAXX5qwLRvgjhV4FpoQm2VigBQss2wgkE`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/9AcnPiEASFjTVqGH5akz1PbJmoUeWx6NV3mMDUKZspy6)
-   * Market Cap: $3,094,320 | Liquidez: $303,405
-   * Vol 5m: $297,113 | Vol 1h: $11,764,367
+   * Market Cap: $3,127,018 | Liquidez: $303,665
+   * Vol 5m: $440,950 | Vol 1h: $11,908,205
 
 3. **$CYBERLEEK**
    * Contrato: `ApZuxdpzMrbEYTGEzeY9afh5pj9d6qPRJCTgQYiipbKg`
@@ -51,8 +51,8 @@ Por favor, analiza la rotación del dinero y dime cuál narrativa tiene mayor fu
 5. **$ANSEM**
    * Contrato: `9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/4pANrqEvjad4xEghrCbAAJfBm8KyNvYMKk1cuGW8erE4)
-   * Market Cap: $232,182,359 | Liquidez: $230,866
-   * Vol 5m: $5,239 | Vol 1h: $105,011
+   * Market Cap: $232,222,102 | Liquidez: $231,022
+   * Vol 5m: $5,438 | Vol 1h: $105,210
 
 ---
 Analiza detalladamente estos datos bajo las reglas de Domin y Wood (baja tenencia, evitar bundling, priorizar volumen en 5m sobre Mcap). ¡Dame mi plan de batalla rápido!
