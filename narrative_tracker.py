@@ -1,0 +1,140 @@
+import os
+import requests
+import json
+
+# =====================================================================
+# SOLANA NARRATIVE TRACKER - VERSÓN 100% GRATUITA (SIN API KEY)
+# =====================================================================
+# Este script escanea DexScreener en tiempo real, filtra los tokens
+# bajo las reglas estrictas de bajo capital y genera un reporte listo
+# para que lo copies y pegues en el Claude gratuito.
+# =====================================================================
+
+def obtener_tokens_tendencia_solana():
+    """
+    Obtiene los tokens más populares y con volumen real de Solana.
+    DexScreener API es de acceso gratuito, público y sin límites estrictos.
+    """
+    print("[+] Conectando con la blockchain de Solana a través de DexScreener...")
+    # Buscamos los tokens que están teniendo volumen en este preciso momento
+    url = "https://api.dexscreener.com/latest/dex/search?q=solana"
+    try:
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            return response.json().get('pairs', [])
+    except Exception as e:
+        print(f"[-] Error de conexión on-chain: {e}")
+    return []
+
+def procesar_y_categorizar(pairs):
+    """
+    Filtra los tokens según las métricas de tu presupuesto ($3 USD)
+    y los agrupa en narrativas para facilitar el análisis.
+    """
+    categorizados = {
+        "AI_Agents": [],          # Narrativa de Inteligencia Artificial
+        "PolitiFi": [],           # Narrativa Política
+        "Cute_Animals_Giga": [],  # Mascotas y Cultos de X
+        "Otros_Graduados": []     # Otras tendencias con volumen
+    }
+
+    visitados = set()
+
+    for p in pairs:
+        # Solo operar tokens en la red de Solana
+        if p.get('chainId') != 'solana':
+            continue
+
+        base_token = p.get('baseToken', {})
+        address = base_token.get('address', '')
+        symbol = base_token.get('symbol', '').upper()
+        name = base_token.get('name', '').lower()
+
+        # Evitar duplicados
+        if address in visitados:
+            continue
+        visitados.add(address)
+
+        mcap = p.get('marketCap', 0)
+        liquidity = p.get('liquidity', {}).get('usd', 0)
+        vol_5m = p.get('volume', {}).get('m5', 0)
+        vol_1h = p.get('volume', {}).get('h1', 0)
+        vol_24h = p.get('volume', {}).get('h24', 0)
+
+        # ==========================================
+        # FILTROS DE SEGURIDAD PARA TU CAPITAL ($3 USD)
+        # ==========================================
+        # 1. Liquidez mínima de $35,000 USD para que no te quedes atrapado sin poder vender
+        if liquidity < 35000:
+            continue
+
+        # 2. Capitalización de mercado mínima para evitar tokens fantasmas
+        if mcap < 100000:
+            continue
+
+        token_info = {
+            "symbol": symbol,
+            "address": address,
+            "mcap": f"${mcap:,.0f}" if mcap else "N/D",
+            "liquidity": f"${liquidity:,.0f}",
+            "vol_5m": f"${vol_5m:,.0f}",
+            "vol_1h": f"${vol_1h:,.0f}",
+            "vol_24h": f"${vol_24h:,.0f}"
+        }
+
+        # Clasificación por palabras clave de la narrativa
+        name_and_symbol = (name + " " + symbol.lower())
+        if any(kw in name_and_symbol for kw in ["goat", "agent", "ai", "truth", "terminal", "fart", "gpts", "eliza", "solanaai"]):
+            categorizados["AI_Agents"].append(token_info)
+        elif any(kw in name_and_symbol for kw in ["trump", "melania", "biden", "harris", "maga", "fight", "usa"]):
+            categorizados["PolitiFi"].append(token_info)
+        elif any(kw in name_and_symbol for kw in ["dog", "cat", "wif", "michi", "pengu", "giga", "sigma", "chill", "popcat"]):
+            categorizados["Cute_Animals_Giga"].append(token_info)
+        else:
+            # Si tiene muy buen volumen en 5 minutos, va a "Otros"
+            if vol_5m > 5000:
+                categorizados["Otros_Graduados"].append(token_info)
+
+    return categorizados
+
+def generar_bloque_copiado(categorizados):
+    """
+    Crea el texto formateado en Markdown limpio diseñado específicamente
+    para que lo copies del terminal de Replit y lo pegues en tu Claude gratis.
+    """
+    markdown = []
+    markdown.append("# 🚨 SOLANA LIVE ON-CHAIN DATA (PARA ANÁLISIS DE TRINCHERA)\n")
+    markdown.append("Actúa como mi analista de riesgo de memecoins. A continuación te pego los datos en tiempo real de los tokens que cumplen con mis filtros de bajo capital ($3 USD de saldo, compras de 0.01 SOL).")
+    markdown.append("Por favor, analiza la rotación del dinero y dime cuál narrativa tiene mayor fuerza en este momento y en qué token específico del listado debería enfocar mi Photon para hacer un scalping rápido (+15% a +20%).\n")
+
+    for categoria, tokens in categorizados.items():
+        if not tokens:
+            continue
+        markdown.append(f"## 📌 NARRATIVA: {categoria.replace('_', ' ')}")
+        for idx, t in enumerate(tokens[:5]):  # Mostrar los top 5 de cada categoría para no saturar
+            markdown.append(f"{idx+1}. **${t['symbol']}**")
+            markdown.append(f"   * Contrato: `{t['address']}`")
+            markdown.append(f"   * Market Cap: {t['mcap']} | Liquidez: {t['liquidity']}")
+            markdown.append(f"   * Vol 5m: {t['vol_5m']} | Vol 1h: {t['vol_1h']}")
+            markdown.append("")
+
+    markdown.append("---")
+    markdown.append("Analiza detalladamente estos datos bajo las reglas de Domin y Wood (baja tenencia, evitar bundling, priorizar volumen en 5m sobre Mcap). ¡Dame mi plan de batalla rápido!")
+
+    return "\n".join(markdown)
+
+if __name__ == "__main__":
+    raw_pairs = obtener_tokens_tendencia_solana()
+    if raw_pairs:
+        datos_filtrados = procesar_y_categorizar(raw_pairs)
+        reporte_final = generar_bloque_copiado(datos_filtrados)
+
+        # Limpiar consola e imprimir el resultado listo para copiar
+        print("\n" + "="*60)
+        print("¡ESCÁNER COMPLETADO CON ÉXITO!")
+        print("COPIA TODO EL TEXTO DE ABAJO Y PÉGALO EN TU CHAT DE CLAUDE:")
+        print("="*60 + "\n")
+        print(reporte_final)
+        print("\n" + "="*60)
+    else:
+        print("[-] No se pudieron recuperar datos en este turno. Intenta de nuevo en unos segundos.")

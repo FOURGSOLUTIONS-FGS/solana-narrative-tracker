@@ -1,0 +1,36 @@
+name: Solana Narrative Tracker
+
+# Dos ventanas horarias, hora Colombia (COT = UTC-5, sin horario de verano):
+#   Ventana 1 — 7:20am a 8:20am COT (12:20-13:20 UTC), cada 10 min.
+#     Captura la apertura del mercado y deja un mapa de narrativas listo
+#     para cuando abre Wall Street.
+#   Ventana 2 — 1:45am a 5:00am COT (6:45-10:00 UTC), cada 10 min.
+#     Madrugada americana: tokens recién creados que suelen volverse
+#     virales o acumular fuerza en esas horas.
+#
+# GitHub Actions no garantiza el minuto exacto (puede atrasarse unos
+# minutos en horas pico de la plataforma) — es "mejor esfuerzo", no un
+# reloj atómico. Para correrlo fuera de estas ventanas, usa el botón
+# "Run workflow" en la pestaña Actions (ver README.md).
+on:
+  schedule:
+    - cron: "20,30,40,50 12 * * *"
+    - cron: "0,10,20 13 * * *"
+    - cron: "45,55 6 * * *"
+    - cron: "5,15,25,35,45,55 7 * * *"
+    - cron: "5,15,25,35,45,55 8 * * *"
+    - cron: "5,15,25,35,45,55 9 * * *"
+    - cron: "0 10 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python narrative_tracker.py
