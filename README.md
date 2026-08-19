@@ -8,13 +8,14 @@ bajo capital, y genera un bloque de texto listo para pegar en Claude
 genera un reporte de texto. La decisión y la ejecución en Photon (u otra
 plataforma) siguen siendo manuales, tuyas.
 
-## Cómo leer el reporte de cada corrida
+## Cómo leer el reporte — un solo link fijo
 
-1. Entra a la pestaña **Actions** de este repositorio.
-2. Click en **Solana Narrative Tracker** (la lista de corridas, a la izquierda).
-3. Click en la corrida más reciente (arriba del todo).
-4. Click en el job **scan** → despliega el paso `Run python narrative_tracker.py`.
-5. Ahí está el bloque de texto — cópialo y pégalo en tu chat de Claude.
+**[Abrir el reporte más reciente](reporte.md)** — siempre la misma URL. Cada
+corrida lo sobreescribe automáticamente y lo sube al repo; solo entras a ese
+link, GitHub lo muestra ya formateado, y copias el texto de ahí.
+
+No hace falta entrar a la pestaña Actions para nada del día a día — eso solo
+sirve si algo falla y quieres ver el detalle técnico (ver abajo).
 
 ## Cómo correrlo manualmente, sin esperar al horario
 
@@ -46,8 +47,21 @@ Todo el criterio de filtrado (liquidez mínima, market cap mínimo, palabras
 clave por narrativa) vive en `narrative_tracker.py` — es el mismo script
 original, sin cambios de lógica, solo desplegado para correr solo.
 
+## Si algo falla (reporte.md no se actualiza)
+
+1. Pestaña **Actions** → **Solana Narrative Tracker** → la corrida más reciente.
+2. Si tiene una ❌ roja, click en el job **scan** para ver en qué paso falló.
+3. Lo más probable: GeckoTerminal tardó más de 10s en responder (raro) o
+   hubo un límite de rate temporal — la siguiente corrida (10 min después)
+   normalmente se recupera sola.
+
 ## Costo
 
-$0. El repo es público, así que los minutos de GitHub Actions no tienen
-costo ni límite mensual. No hay API keys ni secretos — DexScreener es
-público y no requiere autenticación.
+Repo **privado** — los minutos de GitHub Actions sí consumen la cuota del
+plan de la organización (a diferencia de un repo público, que es gratis sin
+límite). Con el horario actual (~28 corridas/día, unos 15-20 segundos cada
+una) el uso estimado es de ~800-900 minutos/mes, dentro de la cuota gratuita
+típica de 2.000 min/mes — pero si la organización ya usa Actions para otras
+cosas, vale la pena revisar **Settings → Billing → Actions** de vez en
+cuando. No hay API keys ni secretos propios — DexScreener/GeckoTerminal son
+públicos y no requieren autenticación.

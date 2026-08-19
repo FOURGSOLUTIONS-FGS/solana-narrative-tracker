@@ -193,5 +193,12 @@ if __name__ == "__main__":
         print("="*60 + "\n")
         print(reporte_final)
         print("\n" + "="*60)
+
+        # Además del log de consola, se guarda en un archivo del repo — así
+        # el reporte más reciente siempre está en la MISMA URL, sin tener
+        # que navegar los logs de GitHub Actions para encontrarlo.
+        with open("reporte.md", "w", encoding="utf-8") as f:
+            f.write(reporte_final)
+        print("\n[+] Guardado en reporte.md")
     else:
         print("[-] No se pudieron recuperar datos en este turno. Intenta de nuevo en unos segundos.")
