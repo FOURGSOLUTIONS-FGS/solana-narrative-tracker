@@ -12,19 +12,76 @@ import json
 
 def obtener_tokens_tendencia_solana():
     """
-    Obtiene los tokens más populares y con volumen real de Solana.
-    DexScreener API es de acceso gratuito, público y sin límites estrictos.
+    Obtiene pools reales de memecoins de Solana vía GeckoTerminal.
+
+    ARREGLO (2026-08-19): la versión original buscaba la palabra literal
+    "solana" en DexScreener (`/latest/dex/search?q=solana`) — eso devuelve
+    sobre todo pares grandes como SOL/USDC (porque literalmente contienen
+    la palabra "solana" en el nombre), no memecoins nuevas o en tendencia.
+    Verificado en vivo: ese endpoint da 20 pares, casi ninguno pasa los
+    filtros, y el reporte final sale vacío.
+
+    GeckoTerminal es igual de gratuito y sin API key, pero consultando los
+    DEX donde de verdad viven las memecoins ya graduadas (pumpswap, raydium,
+    meteora, orca) en vez de buscar una palabra. Cada pool se traduce al
+    mismo formato que usaba DexScreener (`chainId`/`baseToken`/`marketCap`/
+    `liquidity`/`volume`) para que `procesar_y_categorizar` y
+    `generar_bloque_copiado` sigan funcionando exactamente igual, sin tocar
+    nada de la lógica de filtrado ni de narrativas.
     """
-    print("[+] Conectando con la blockchain de Solana a través de DexScreener...")
-    # Buscamos los tokens que están teniendo volumen en este preciso momento
-    url = "https://api.dexscreener.com/latest/dex/search?q=solana"
-    try:
-        response = requests.get(url, timeout=10)
-        if response.status_code == 200:
-            return response.json().get('pairs', [])
-    except Exception as e:
-        print(f"[-] Error de conexión on-chain: {e}")
-    return []
+    print("[+] Conectando con la blockchain de Solana a través de GeckoTerminal...")
+    dexes = ["pumpswap", "raydium", "meteora", "orca"]
+    pairs = []
+    for dex in dexes:
+        url = f"https://api.geckoterminal.com/api/v2/networks/solana/dexes/{dex}/pools"
+        try:
+            response = requests.get(url, params={"page": 1}, timeout=10, headers={"Accept": "application/json"})
+            if response.status_code == 200:
+                for pool in response.json().get("data", []):
+                    pairs.append(_pool_geckoterminal_a_formato_dexscreener(pool))
+            else:
+                print(f"[-] {dex}: HTTP {response.status_code}")
+        except Exception as e:
+            print(f"[-] Error de conexión con {dex}: {e}")
+    return pairs
+
+
+def _pool_geckoterminal_a_formato_dexscreener(pool):
+    """Traduce un pool de GeckoTerminal a la misma forma de diccionario que
+    devolvía DexScreener, para que el resto del script no necesite cambios."""
+    attrs = pool.get("attributes", {}) or {}
+    rel = pool.get("relationships", {}) or {}
+    base_id = ((rel.get("base_token") or {}).get("data") or {}).get("id", "")
+    mint = base_id.split("_", 1)[1] if "_" in base_id else base_id
+    nombre = (attrs.get("name") or "").split(" / ")[0]  # "NVDA / SOL" -> "NVDA"
+
+    # `market_cap_usd` suele venir null en tokens recién graduados de
+    # pump.fun — `fdv_usd` casi siempre sí está poblado, así que sirve de
+    # respaldo (mismo criterio que ya usa el proyecto en otros scripts).
+    mcap = attrs.get("market_cap_usd") or attrs.get("fdv_usd") or 0
+    volumen = attrs.get("volume_usd") or {}
+
+    return {
+        "chainId": "solana",
+        "baseToken": {"address": mint, "symbol": nombre, "name": nombre},
+        "marketCap": float(mcap) if mcap else 0.0,
+        "liquidity": {"usd": float(attrs.get("reserve_in_usd") or 0)},
+        "volume": {
+            "m5": float(volumen.get("m5") or 0),
+            "h1": float(volumen.get("h1") or 0),
+            "h24": float(volumen.get("h24") or 0),
+        },
+    }
+
+# Los endpoints por-DEX de GeckoTerminal listan TODOS los pares, incluyendo
+# contra monedas base que no son memecoins (SOL, USDC, USDT) — verificado en
+# vivo: sin esto, "$SOL" aparecía como "candidato" en Otros Graduados.
+MINTS_QUE_NO_SON_MEMECOINS = {
+    "So11111111111111111111111111111111111111112",  # SOL (wrapped)
+    "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",  # USDC
+    "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",  # USDT
+}
+
 
 def procesar_y_categorizar(pairs):
     """
@@ -50,8 +107,8 @@ def procesar_y_categorizar(pairs):
         symbol = base_token.get('symbol', '').upper()
         name = base_token.get('name', '').lower()
 
-        # Evitar duplicados
-        if address in visitados:
+        # Evitar duplicados y monedas base que no son memecoins (SOL/USDC/USDT)
+        if address in visitados or address in MINTS_QUE_NO_SON_MEMECOINS:
             continue
         visitados.add(address)
 
