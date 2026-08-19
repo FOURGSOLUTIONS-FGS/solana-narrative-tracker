@@ -64,6 +64,12 @@ def _pool_geckoterminal_a_formato_dexscreener(pool):
     return {
         "chainId": "solana",
         "baseToken": {"address": mint, "symbol": nombre, "name": nombre},
+        # Photon abre por dirección del PAR (`/en/lp/{pairAddress}`), no del
+        # token — verificado en vivo navegando a
+        # photon-sol.tinyastro.io/en/lp/<pairAddress> y confirmando que carga
+        # el token correcto sin necesidad de conectar wallet. `attrs.address`
+        # es la dirección del pool mismo, distinta del mint del token.
+        "pairAddress": attrs.get("address"),
         "marketCap": float(mcap) if mcap else 0.0,
         "liquidity": {"usd": float(attrs.get("reserve_in_usd") or 0)},
         "volume": {
@@ -129,9 +135,21 @@ def procesar_y_categorizar(pairs):
         if mcap < 100000:
             continue
 
+        pair_address = p.get('pairAddress', '')
         token_info = {
             "symbol": symbol,
             "address": address,
+            "pair_address": pair_address,
+            # Link directo que abre el token en Photon sin tener que buscarlo
+            # a mano — Photon usa la dirección del PAR, no la del token (ver
+            # `_pool_geckoterminal_a_formato_dexscreener`), verificado
+            # navegando en vivo a esta URL con un pair_address real. Si por
+            # algún motivo GeckoTerminal no trae pair_address (no debería
+            # pasar, pero por si acaso), se deja vacío en vez de inventar
+            # una URL sin probar — mejor "no salió link" que un link roto.
+            "photon_url": (
+                f"https://photon-sol.tinyastro.io/en/lp/{pair_address}" if pair_address else ""
+            ),
             "mcap": f"${mcap:,.0f}" if mcap else "N/D",
             "liquidity": f"${liquidity:,.0f}",
             "vol_5m": f"${vol_5m:,.0f}",
@@ -171,6 +189,9 @@ def generar_bloque_copiado(categorizados):
         for idx, t in enumerate(tokens[:5]):  # Mostrar los top 5 de cada categoría para no saturar
             markdown.append(f"{idx+1}. **${t['symbol']}**")
             markdown.append(f"   * Contrato: `{t['address']}`")
+            if t.get("photon_url"):
+                # Click directo — abre el token en Photon sin buscarlo a mano.
+                markdown.append(f"   * 🔫 [Abrir en Photon]({t['photon_url']})")
             markdown.append(f"   * Market Cap: {t['mcap']} | Liquidez: {t['liquidity']}")
             markdown.append(f"   * Vol 5m: {t['vol_5m']} | Vol 1h: {t['vol_1h']}")
             markdown.append("")
