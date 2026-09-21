@@ -8,88 +8,96 @@ Por favor, analiza la rotación del dinero y dime cuál narrativa tiene mayor fu
 1. **$GOOGLE**
    * Contrato: `DddGmPQFLJa62UVYpA1ukDs5Zd4Sq5H9WJfP8uU2p7bJ`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/3quSDgnkvCTJ6NiuTHRfvckXuTGxXqNtruATp5rJ2FrS)
-   * Edad: 9h 37m
-   * Market Cap: $7,393,300 | Liquidez: $523,037
-   * Vol 5m: $177,163 | Vol 1h: $5,272,636
+   * Edad: 10h 25m
+   * Market Cap: $8,568,628 | Liquidez: $574,757
+   * Vol 5m: $582,127 | Vol 1h: $6,201,842
 
-2. **$ELON**
-   * Contrato: `F8Gep221GuoH6MmwaMt1wdArFGpP1WNaXTsrS59JXov5`
-   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/7QAvSBptkGhDrntpa9GMLemjBRwa4RmEK4aD11QjVn7j)
-   * Edad: 11h 7m
-   * Market Cap: $5,276,579 | Liquidez: $269,020
-   * Vol 5m: $176,413 | Vol 1h: $4,861,971
-
-3. **$FOMO**
+2. **$FOMO**
    * Contrato: `8Dae96KhmWWojskSRkqECNRUSj88UXosEGpKi5TkS2uD`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/ND9iAwruJPxKegrvf6Q7joP9ZY9RBnn9ywRWE8fRvFQ)
-   * Edad: 11h 10m
-   * Market Cap: $5,770,520 | Liquidez: $268,397
-   * Vol 5m: $173,523 | Vol 1h: $4,969,213
+   * Edad: 11h 58m
+   * Market Cap: $6,343,698 | Liquidez: $296,202
+   * Vol 5m: $575,073 | Vol 1h: $5,953,761
 
-4. **$STAMP**
+3. **$ELON**
+   * Contrato: `F8Gep221GuoH6MmwaMt1wdArFGpP1WNaXTsrS59JXov5`
+   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/7QAvSBptkGhDrntpa9GMLemjBRwa4RmEK4aD11QjVn7j)
+   * Edad: 11h 56m
+   * Market Cap: $5,588,443 | Liquidez: $288,898
+   * Vol 5m: $553,704 | Vol 1h: $5,908,021
+
+4. **$URA**
+   * Contrato: `URARfsinxCRw4JpvQhuT4CxavdZXZEMjv9ZwWmWpwag`
+   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/8AbfaMZNF82LLPiSKka9947dzs9umnZiVmJ7LYs25JJT)
+   * Edad: 52m
+   * Market Cap: $1,408,221 | Liquidez: $110,215
+   * Vol 5m: $71,615 | Vol 1h: $2,050,503
+
+5. **$STAMP**
    * Contrato: `EKtmPPLaCbEEKiwoHHtV7TsRsmPXs5CMGtQtZFSiinsc`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/HyGDqJAD7Yod35XT5KiCQvsUatLRE4eHZMtLJQHfQFtK)
-   * Edad: 16h 27m
-   * Market Cap: $1,664,375 | Liquidez: $51,161
-   * Vol 5m: $40,419 | Vol 1h: $390,381
+   * Edad: 17h 15m
+   * Market Cap: $1,070,535 | Liquidez: $44,208
+   * Vol 5m: $6,538 | Vol 1h: $196,459
 
-5. **$ZEBRA**
-   * Contrato: `EqFG72Z35r8cAV8mKu3UK2L8NUTR1ZNyMr88E4BnwN8Q`
-   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/8WormohZAE1UHyEX65Y5njDzwgEiCPXskr5QhJRdk68d)
-   * Edad: 17h 41m
-   * Market Cap: $171,037 | Liquidez: $44,407
-   * Vol 5m: $1,461 | Vol 1h: $150,829
+## 📌 NARRATIVA: AI Agents
+1. **$FARTCOIN**
+   * Contrato: `9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump`
+   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/J5jzvT22u1Mt6de4gkBhEsTSTjBfYS7A6aF5jzu9ihkC)
+   * Edad: 493d 16h
+   * Market Cap: $198,403,999 | Liquidez: $36,228
+   * Vol 5m: $3,565 | Vol 1h: $19,727
 
 ## 📌 NARRATIVA: Cute Animals Giga
 1. **$CATE**
    * Contrato: `Ai66LHZG9MCzg1WKdawwqduVAXpNDUuV8M3uyq5ppump`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/Cgk5DWJc59TcWTQ1iaJ8Hn4bsVjKXJF2fCjPAZtMUSkV)
    * Edad: 50d 13h
-   * Market Cap: $93,975,563 | Liquidez: $95,870
-   * Vol 5m: $5,201 | Vol 1h: $60,755
+   * Market Cap: $90,787,732 | Liquidez: $94,605
+   * Vol 5m: $12,542 | Vol 1h: $107,230
 
 2. **$$WIF**
    * Contrato: `EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/D6NdKrKNQPmRZCCnG1GqXtF7MMoHB7qR6GU5TkG59Qz1)
-   * Edad: 855d 18h
-   * Market Cap: $246,523,558 | Liquidez: $176,737
-   * Vol 5m: $9,216 | Vol 1h: $121,573
+   * Edad: 855d 19h
+   * Market Cap: $245,448,822 | Liquidez: $176,833
+   * Vol 5m: $11,495 | Vol 1h: $133,405
 
 ## 📌 NARRATIVA: Otros Graduados
 1. **$ANTFUN**
    * Contrato: `CWZ6BsdnjkDVTGkmL6bGbJXXig6ceef12KvyGQW14cMt`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/54Vp27uLaw4wNLo5n7r4fcC6zLamoQc28xBARjss4EUJ)
-   * Edad: 73d 10h
-   * Market Cap: $24,203,034 | Liquidez: $14,611,823
-   * Vol 5m: $28,209 | Vol 1h: $1,280,439
+   * Edad: 73d 11h
+   * Market Cap: $25,916,532 | Liquidez: $15,354,407
+   * Vol 5m: $56,209 | Vol 1h: $750,178
 
 2. **$PEPE**
    * Contrato: `PEPEqnuuCDbBC89p1u9vpnP1KQ2oj1xTcQBsjt9X55m`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/HDojZeCdUee8nczxsc9MeiMKVF961HqEFeKEvHw74xVR)
-   * Edad: 2d 16h
-   * Market Cap: $1,714,750 | Liquidez: $61,473
-   * Vol 5m: $93,741 | Vol 1h: $367,653
+   * Edad: 2d 17h
+   * Market Cap: $1,746,907 | Liquidez: $67,690
+   * Vol 5m: $34,694 | Vol 1h: $537,373
 
 3. **$STAMP**
    * Contrato: `EKtmPPLaCbEEKiwoHHtV7TsRsmPXs5CMGtQtZFSiinsc`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/HyGDqJAD7Yod35XT5KiCQvsUatLRE4eHZMtLJQHfQFtK)
-   * Edad: 16h 27m
-   * Market Cap: $1,664,375 | Liquidez: $51,161
-   * Vol 5m: $40,419 | Vol 1h: $390,381
+   * Edad: 17h 15m
+   * Market Cap: $1,070,535 | Liquidez: $44,208
+   * Vol 5m: $6,538 | Vol 1h: $196,459
 
 4. **$WXMR**
    * Contrato: `WXMRyRZhsa19ety5erZhHg4N3xj3EVN92u94422teJp`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/GgoFghiA6Ca7YNmG6dRxwKQWkZhRK8ND47EREz46arot)
-   * Edad: 11d 13h
-   * Market Cap: $1,331,983 | Liquidez: $75,009
-   * Vol 5m: $8,705 | Vol 1h: $153,127
+   * Edad: 11d 14h
+   * Market Cap: $1,330,847 | Liquidez: $75,060
+   * Vol 5m: $13,917 | Vol 1h: $127,040
 
 5. **$BP**
    * Contrato: `BPxxfRCXkUVhig4HS1Lh7kZqV6SPJhzfEk4x6fVBjPCy`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/6qz7THwQvcjF3HyDGLuKaLBUk6EyJKeZXZMWLAeiwfjd)
-   * Edad: 182d 2h
-   * Market Cap: $224,809,550 | Liquidez: $3,730,468
-   * Vol 5m: $73,167 | Vol 1h: $1,014,612
+   * Edad: 182d 3h
+   * Market Cap: $214,305,148 | Liquidez: $3,986,437
+   * Vol 5m: $18,561 | Vol 1h: $1,133,680
 
 ---
 Analiza detalladamente estos datos bajo las reglas de Domin y Wood (baja tenencia, evitar bundling, priorizar volumen en 5m sobre Mcap). Dale más peso a la sección Nuevos Momentum y a la edad de cada token — más nuevo y con volumen ya activo es justo lo que hace falta para un scalp de minutos. ¡Dame mi plan de batalla rápido!
