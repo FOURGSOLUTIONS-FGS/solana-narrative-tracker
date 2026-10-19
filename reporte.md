@@ -8,89 +8,81 @@ Por favor, analiza la rotación del dinero y dime cuál narrativa tiene mayor fu
 1. **$STARTUPSI**
    * Contrato: `EKosQw4oJFbXmeJ4qRnbH1quGFRTc3Eok6nwnFKDpump`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/AscPffyZxMnHHFHqQWawtcrmasgUzCJtwyu6oS6CQD2R)
-   * Edad: 22h 19m
-   * Market Cap: $25,180,770 | Liquidez: $477,595
-   * Vol 5m: $62,358 | Vol 1h: $1,058,219
+   * Edad: 1d 0h
+   * Market Cap: $22,837,503 | Liquidez: $468,750
+   * Vol 5m: $26,309 | Vol 1h: $521,252
 
-2. **$MINTER**
+2. **$FOMO**
+   * Contrato: `6mdVwPt9zEqr3a378UQegzEFxU7JgKVqbXvGGcDpump`
+   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/FLzqNNCHtEd32Vmdk1kkzWWmiyBqGk2vkhowbfZNQVpt)
+   * Edad: 3h 18m
+   * Market Cap: $5,106,815 | Liquidez: $192,324
+   * Vol 5m: $2,004 | Vol 1h: $52,451
+
+3. **$MINTER**
    * Contrato: `3NxfWMHmfQg8NJFW5AG1ti2xACdczWz24e9SKyk1pump`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/3p3yajJRqwrvgNs3M1UDVDXVUriZjZ8vE8bdpnpvkNRJ)
-   * Edad: 1d 19h
-   * Market Cap: $243,922 | Liquidez: $47,428
-   * Vol 5m: $3,557 | Vol 1h: $62,683
+   * Edad: 1d 21h
+   * Market Cap: $166,557 | Liquidez: $41,609
+   * Vol 5m: $1,476 | Vol 1h: $62,672
 
-3. **$MUCRON**
-   * Contrato: `9zvMmVxDsdA9q4uQ64gdGeTqcUD9gQ1xQi7kTH6ppump`
-   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/3kYNsEeBWns3nPyCCSLkZdLs6LpuJxVoYd6T4HrunBpM)
-   * Edad: 22h 27m
-   * Market Cap: $45,956,101 | Liquidez: $582,538
-   * Vol 5m: $2,819 | Vol 1h: $55,141
+4. **$NOX**
+   * Contrato: `Hht3ozgbgvBsoD6h1fgDzfrViWvf5tQuLqJcUptwAq4z`
+   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/EbyELGck1yPbTd2ZH9jeBJgNrUhcTBXFTM9Nuo66yyJw)
+   * Edad: 3h 55m
+   * Market Cap: $367,490 | Liquidez: $53,658
+   * Vol 5m: $768 | Vol 1h: $33,684
 
-4. **$NVIDIA SSI**
-   * Contrato: `HmioaUhV12ZiyQT18BcUp6G3L2ZaxBDH9jyYiGipump`
-   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/4kuzqAJzdjZxai9KD8So5tGLUrH8y8UQmgQj3A5xxpRM)
-   * Edad: 1h 38m
-   * Market Cap: $1,503,675 | Liquidez: $103,656
-   * Vol 5m: $2,402 | Vol 1h: $42,433
-
-5. **$GEMINI**
-   * Contrato: `bWKdoFde5EEQ78bEmQZFeMD2SLffGBtMSvms7Lppump`
-   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/6Zk9n89MUKYoaM2AkJMvqTDxgVdCxpENwWTPtu4JuMce)
-   * Edad: 1h 48m
-   * Market Cap: $1,174,541 | Liquidez: $90,882
-   * Vol 5m: $2,071 | Vol 1h: $38,481
-
-## 📌 NARRATIVA: AI Agents
-1. **$GRIFFAIN**
-   * Contrato: `KENJSUYLASHUMfHyy5o4Hp2FdNqZg1AsUPhfH2kYvEP`
-   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/CpsMssqi3P9VMvNqxrdWVbSBCwyUHbGgNcrw7MorBq3g)
-   * Edad: 715d 16h
-   * Market Cap: $14,533,349 | Liquidez: $1,919,011
-   * Vol 5m: $1 | Vol 1h: $3,276
+5. **$WXMR**
+   * Contrato: `WXMRyRZhsa19ety5erZhHg4N3xj3EVN92u94422teJp`
+   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/BFKBQT4yFZPtzyttHQayNmjDJYduvFaPXuytMgnaqexV)
+   * Edad: 1d 0h
+   * Market Cap: $1,370,959 | Liquidez: $108,739
+   * Vol 5m: $507 | Vol 1h: $87,324
 
 ## 📌 NARRATIVA: Cute Animals Giga
 1. **$ALLINDOGE**
    * Contrato: `HyDKNdnhZNVYQMruBevbNsUWruA9STmAQrS4srXApump`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/5Ln4d8fXeU3gCCneHArHkTNzxnzMaLJxnBwufUx2wPcm)
-   * Edad: 678d 4h
-   * Market Cap: $2,298,460 | Liquidez: $203,753
-   * Vol 5m: $40 | Vol 1h: $1,288
+   * Edad: 678d 6h
+   * Market Cap: $2,282,333 | Liquidez: $202,843
+   * Vol 5m: $62 | Vol 1h: $1,242
 
 ## 📌 NARRATIVA: Otros Graduados
 1. **$TTWO**
    * Contrato: `TTWofwAge91oFhZs7kpQdyrVRkmevgM88xijGvQFbKo`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/F1mbBZYKXGFx5nraY3cK4RgNR5EuShntQ8xDKDD5HY1z)
-   * Edad: 26d 6h
-   * Market Cap: $1,660,623 | Liquidez: $35,167
-   * Vol 5m: $29,724 | Vol 1h: $438,829
+   * Edad: 26d 7h
+   * Market Cap: $1,669,146 | Liquidez: $54,101
+   * Vol 5m: $9,120 | Vol 1h: $346,956
 
-2. **$STONK**
-   * Contrato: `6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx`
-   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/zxTpi4BtaWX3mgdAPoezkMD1hxx8CdeCfrqXMWvSCLX)
-   * Edad: 68d 6h
-   * Market Cap: $90,470,326 | Liquidez: $2,090,810
-   * Vol 5m: $25,954 | Vol 1h: $111,389
+2. **$FTR**
+   * Contrato: `DFMt2FyLpB6ekPNAzVErLXgpSnJ9CRf1VnxBAkTLpump`
+   * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/2jAq7KMy4eqxex1DQHo1nSybEv2yTY94dUDKmvZ2yUb3)
+   * Edad: 3d 17h
+   * Market Cap: $1,136,154 | Liquidez: $132,721
+   * Vol 5m: $6,104 | Vol 1h: $118,416
 
 3. **$ZEC**
    * Contrato: `A7bdiYdS5GjqGFtxf17ppRHtDKPkkRqbKtR27dxvQXaS`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/2TAgfogn8JRwwTnsGKUa6WUT5Xdv1iMEzfEDMor68X9C)
-   * Edad: 365d 13h
-   * Market Cap: $116,274,982 | Liquidez: $4,003,561
-   * Vol 5m: $9,669 | Vol 1h: $333,948
+   * Edad: 365d 15h
+   * Market Cap: $114,643,610 | Liquidez: $3,942,139
+   * Vol 5m: $26,193 | Vol 1h: $301,613
 
 4. **$KMNO**
    * Contrato: `KMNo3nJsBXfcpJTVhZcXLW7RmTwTt4GVFE7suUBo9sS`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/3ndjN1nJVUKGrJBc1hhVpER6kWTZKHdyDrPyCJyX3CXK)
-   * Edad: 739d 7h
-   * Market Cap: $228,516,317 | Liquidez: $1,982,099
-   * Vol 5m: $9,944 | Vol 1h: $203,499
+   * Edad: 739d 9h
+   * Market Cap: $226,958,208 | Liquidez: $1,978,917
+   * Vol 5m: $6,908 | Vol 1h: $139,212
 
 5. **$CBBTC**
    * Contrato: `cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij`
    * 🔫 [Abrir en Photon](https://photon-sol.tinyastro.io/en/lp/HxA6SKW5qA4o12fjVgTpXdq2YnZ5Zv1s7SB4FFomsyLM)
-   * Edad: 710d 20h
-   * Market Cap: $7,786,276,907 | Liquidez: $5,773,081
-   * Vol 5m: $6,007 | Vol 1h: $603,564
+   * Edad: 710d 21h
+   * Market Cap: $7,765,076,862 | Liquidez: $5,772,259
+   * Vol 5m: $9,574 | Vol 1h: $526,554
 
 ---
 Analiza detalladamente estos datos bajo las reglas de Domin y Wood (baja tenencia, evitar bundling, priorizar volumen en 5m sobre Mcap). Dale más peso a la sección Nuevos Momentum y a la edad de cada token — más nuevo y con volumen ya activo es justo lo que hace falta para un scalp de minutos. ¡Dame mi plan de batalla rápido!
